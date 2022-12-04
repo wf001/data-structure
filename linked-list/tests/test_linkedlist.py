@@ -1,4 +1,4 @@
-from linkedlist import LinkedList
+from src.linkedlist import LinkedList
 import pytest
 
 

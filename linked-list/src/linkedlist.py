@@ -10,12 +10,48 @@ class LinkedList:
     """Singly linked-list
 
     see also https://gist.githubusercontent.com/katryo/2965919/raw/993ee3bd71b11a113356c9cf00407e381debc2be/linkedlist.py
-    """
-    __slot__ = ['head', 'size']
 
-    def __init__(self):
+    Example:
+    >>> from linkedlist import LinkedList
+    >>> l = LinkedList()
+
+    # append a new item into Linked List at the last position
+    >>> l.append(1)
+    >>> l.append(2)
+    >>> l.append(3)
+    >>> l
+    [1, 2, 3]
+
+    # insert a new item into Linked List at the position which is retrieved from argument
+    >>> l.insert(4, 1)
+    >>> l
+    [1, 4, 2, 3]
+
+    # remove the last item
+    >>> l.pop_back()
+    >>> l
+    [1, 4, 2]
+
+    # remove the first item
+    >>> l.pop_front()
+    >>> l
+    [4, 2]
+
+    # sorting
+    >>> l.append(7)
+    >>> l.append(6)
+    >>> l.append(3)
+    >>> m = l.sorted()
+    >>> m
+    [2, 3, 4, 6, 7]
+
+    """
+    __slot__ = ['head', 'size', 'debug']
+
+    def __init__(self, debug=False):
         self.head = _Node(None)
         self.size = 0
+        self.debug = debug
 
     def __str__(self):
         ret = '['
@@ -30,7 +66,7 @@ class LinkedList:
         return ret
 
     def __repr__(self):
-        if debug:
+        if self.debug:
             ret = ''
             t = self.head
             while t:
@@ -234,16 +270,6 @@ class _Node:
         return id(self) == id(obj)
 
 
-debug = False
-
-
-def _info(*args):
-    i = stack()[1]
-    file_name = i.filename.split('/')[-1]
-    lineno = str(i.lineno)
-    func_name = i.function
-    names = {id(v): k for k, v in currentframe().f_back.f_locals.items()}
-
-    print(f'\033[31mINFO ### {file_name}'
-          f'\033[34m({lineno})\033[0m::{func_name}\n\033[0m' +
-          '\n'.join(names.get(id(arg), '???')+' = '+repr(arg) for arg in args))
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
